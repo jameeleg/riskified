@@ -32,8 +32,8 @@ const CompanyToCompanyKey = {
 };
 
 const ApiPathByKey = {
-	visaKey: '/visa/api/chargeCard‌',
 	mastercardKey: '/mastercard/capture_card',
+	visaKey: '/visa/api/chargeCard',
 }
 
 // non transient errors that won't trigger a retry
