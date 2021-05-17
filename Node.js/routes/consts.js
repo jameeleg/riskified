@@ -46,6 +46,8 @@ const NonTransientErrorsByKey = {
 	}
 };
 
+const MAX_RETRIES = 3;
+
 module.exports = {
 	CompaniesName,
 	CompaniesStatus,
@@ -54,4 +56,5 @@ module.exports = {
 	CompanyToCompanyKey,
 	ApiPathByKey,
 	NonTransientErrorsByKey,
+	MAX_RETRIES,
 }

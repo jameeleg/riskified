@@ -10,7 +10,8 @@ const {
 	ApiParams,
 	CompanyToCompanyKey,
 	ApiPathByKey,
-	NonTransientErrorsByKey
+	NonTransientErrorsByKey,
+	MAX_RETRIES,
 } = require('./consts');
 
 const {
@@ -70,10 +71,10 @@ router.post(
 		merchId = 'unspecified-merchant-id';
 	}
 
-  	let maxRetries = 1, i = 0, canRetry = true;
+  	let i = 0, canRetry = true;
   	let failedReason;
 
-  	while (i < maxRetries && canRetry){
+  	while (i < MAX_RETRIES && canRetry){
   		
   		await new Promise((resolve, reject) => {
 			setTimeout(() => resolve(), Math.pow(i,2)*1000);
@@ -171,35 +172,3 @@ const prepareRespone = (res, req) =>{
 
 
 module.exports = router;
-
-
-
-/*
-curl --header "Content-Type: application/json" \
-	--header "merchant-identification: qqq2wsd23123" \
-	--request POST \
-	--data '{"fullName":"THE tester","creditCardNumber":"4580 4580 4580 4580","creditCardCompany":"visa","expirationDate":"04/23","cvv":"232","amount":12.34}' \
-	http://localhost:8000/api/charge
-
-curl --header "Content-Type: application/json" \
-	--header "identifier: testt" \
-	--request POST \
-	--data '{"fullName":"jameel Egbaria","number":"4242424242424242","expiration":"04/22","cvv":"232","totalAmount":1900}' \
-	https://interview.riskxint.com/visa/api/chargeCard‌
-
-
-curl --header "Content-Type: application/json" \
-	--header "identifier: testt" \
-	--request POST \
-	--data '{"first_name":"ABC","last_name":"EFG","card_number":"4242424242424242","expiration":"04-22","cvv":"232","totalAmount":1900}' \
-	
-curl --header "Content-Type: application/json" \
-	--header "identifier: testt" \
-	--request POST \
-	--data '{"fullName":"jameel Egbaria","number":"4242424242424242","expiration":"04/22","cvv":"232","totalAmount":1900}' \
-	https://interview.riskxint.com/visa/api/chargeCard‌
-
-
-curl --header "Content-Type: application/json" --header "merchant-identification: dfs23D2sx" --request Get http://localhost:8000/api/chargeStatuses
-
-*/
